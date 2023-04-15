@@ -7,8 +7,9 @@ starting_population={}
 fitness_goal=len(edges) #if the fitness is equal to the fitness goal, then the solution is found
 N=10 #size of the population
 
-
-#fitness function to evaluate each candidate solutions
+#                                                       #
+# Fitness function to evaluate each candidate solutions #
+#                                                       #
 def fitness_function(solution):
     fitness=0
     for i in range(len(edges)):
@@ -21,10 +22,27 @@ for i in range(N):
     s="".join(random.choice(colors) for i in range(len(nodes)))
     starting_population[s]=fitness_function(s)
 
-#print(starting_population)
+#                   #
+# Parent selection  #
+#                   #
 
-def parent_select(population):
-    
+def roulette_selection(population):
+    # Compute the total fitness of the population
+    total_fitness = sum(population.values())
+
+    # Generate a random number between 0 and the total fitness
+    spin = random.uniform(0, total_fitness)
+
+    # Iterate over the solutions and accumulate their fitness scores until we reach the selected number
+    accumulated_fitness = 0
+    for sol_fitness in population.values():
+        accumulated_fitness += sol_fitness
+        if accumulated_fitness >= spin:
+            # Return the selected solution
+            return solution
+
+    # If no solution has been selected, return None
+    return None
 
 
 
