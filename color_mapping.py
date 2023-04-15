@@ -82,14 +82,14 @@ def algorithm(N, nodes, colors, fitness_goal):
             # child1=mutate(child1)
             # child2=mutate(child2)
             # evaluate the fitness of the children
-            population[child1] = fitness_function(child1)
-            population[child2] = fitness_function(child2)
+            if child1 not in population:
+                population[child1] = fitness_function(child1)
+            if child2 not in population:
+                population[child2] = fitness_function(child2)
         # select the best 10 solutions
-        population = dict(sorted(population.items(),
-                          key=lambda item: item[1], reverse=True)[:10])
-    max_value = max(population.values())
-    print("The best solution/solutions with a fitness score of: "+str(max_value))
-    print([k for k,v in population.items() if v == max_value])
+        population = dict(sorted(population.items(),key=lambda item: item[1], reverse=True)[:10])
+    best_solutions = [k for k, v in population.items() if v == max(population.values())]
+    print(f"The best solution/solutions with a fitness score of {max(population.values())}: {best_solutions}")
     
 
 
