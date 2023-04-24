@@ -1,5 +1,6 @@
 import random
-
+import networkx as nx
+import matplotlib.pyplot as plt
 #                                                       #
 # Fitness function to evaluate each candidate solutions #
 #                                                       #
@@ -77,8 +78,26 @@ def algorithm(nodes, colors, edges, N, repeat_limit=10000):
         # select the best N solutions
         population = dict(sorted(population.items(),key=lambda item: item[1], reverse=True)[:N])
     best_solutions = [k for k, v in population.items() if v == max(population.values())]
+    for i in best_solutions:
+        plot_graph(nodes, colors, edges, i,"fitness score: "+str(population[i]))
     print(f"The best solution/solutions with a fitness score of {max(population.values())}: {best_solutions}")
     
+#
+# Plot graph
+# 
+def plot_graph(nodes, colors, edges, solution,custom_text):
+    G = nx.Graph()
+    transformed_nodes=[]
+    transformed_colors={'B': 'blue', 'R': 'red', 'G': 'green', 'Y': 'yellow'}
+    for i in nodes:
+        transformed_nodes.append((i, {'color': transformed_colors[solution[i]]}))
+    G.add_nodes_from(transformed_nodes)
+    G.add_edges_from(edges)
+    nx.draw(G, with_labels=True, node_color=[G.nodes[i]['color'] for i in G.nodes])
+    #nx. draw_networkx(G) #Draw the graph G
+    #plt.savefig("lect01a .eps") #Save the drawing of G
+    plt.text(-0.9, .99, custom_text, ha='left', va='top')
+    plt.show() #Show the drawing of G on screen
 #
 # Our data 
 #
