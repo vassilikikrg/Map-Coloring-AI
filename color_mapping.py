@@ -87,17 +87,20 @@ def algorithm(nodes, colors, edges, N, repeat_limit=10000):
 # 
 def plot_graph(nodes, colors, edges, solution,custom_text):
     G = nx.Graph()
-    transformed_nodes=[]
-    transformed_colors={'B': 'blue', 'R': 'red', 'G': 'green', 'Y': 'yellow'}
+    graph_nodes=[]
+    graph_colors={'B': 'blue', 'R': 'red', 'G': 'green', 'Y': 'yellow'}
+
     for i in nodes:
-        transformed_nodes.append((i, {'color': transformed_colors[solution[i]]}))
-    G.add_nodes_from(transformed_nodes)
+        graph_nodes.append((i, {'color': graph_colors[solution[i]]}))
+
+    G.add_nodes_from(graph_nodes)
     G.add_edges_from(edges)
-    nx.draw(G, with_labels=True, node_color=[G.nodes[i]['color'] for i in G.nodes])
-    #nx. draw_networkx(G) #Draw the graph G
-    #plt.savefig("lect01a .eps") #Save the drawing of G
-    plt.text(-0.9, .99, custom_text, ha='left', va='top')
+
+    nx.draw(G, with_labels=True, node_color=[G.nodes[i]['color'] for i in G.nodes]) #draw the graph and color the nodes according to the provided solution
+    plt.text(-0.9, .99, custom_text, ha='left', va='top') #print a label on the graph
     plt.show() #Show the drawing of G on screen
+
+
 #
 # Our data 
 #
